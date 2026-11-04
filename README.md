@@ -12,23 +12,78 @@ LEBF-YOLO is a YOLO11-based object detection model for small objects in UAV imag
 
 The model predicts at **P2, P3, and P4**, with strides of 4, 8, and 16.
 
-## 📦 Installation
+## 📦 Environment and Installation
 
-From the project root, install the local package and its dependencies:
+### Experimental environment
+
+The experiments reported in Section 4.1 of the paper used the following environment:
+
+| Component | Configuration |
+| --- | --- |
+| Operating system | Linux |
+| Python | 3.9.21 |
+| PyTorch | 2.6.0 |
+| Framework | Ultralytics 8.3.9 with the LEBF-YOLO modifications in this repository |
+
+### Installation on Linux
+
+With Conda installed, create and activate an environment:
 
 ```bash
-python -m pip install -e .
+conda create -n lebfyolo python=3.9.21 -y
+conda activate lebfyolo
 ```
 
-Dependencies are defined in [pyproject.toml](pyproject.toml), including PyTorch, torchvision, timm, and einops. Use a PyTorch installation compatible with your CUDA environment for GPU training.
-
-Check that Python imports this project:
+Install PyTorch 2.6.0 and its matching torchvision 0.21.0 package for CUDA 12.4, using the [official PyTorch installation instructions](https://pytorch.org/get-started/previous-versions/#v260):
 
 ```bash
-python -c "import ultralytics; print(ultralytics.__version__); print(ultralytics.__file__)"
+python -m pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
 ```
 
-The version should be `8.3.9`, and the package path should point to this repository.
+Install the remaining dependencies directly; this installation procedure does not require a `requirements.txt` file:
+
+```bash
+python -m pip install "numpy>=1.23.0" "matplotlib>=3.3.0" \
+    "opencv-python>=4.6.0" "pillow>=7.1.2" "pyyaml>=5.3.1" \
+    "requests>=2.23.0" "scipy>=1.4.1" "tqdm>=4.64.0" \
+    psutil py-cpuinfo "pandas>=1.1.4" "seaborn>=0.11.0" \
+    timm==1.0.19 einops==0.8.1 "ultralytics-thop>=2.0.0"
+```
+
+The paper does not specify the versions of these additional dependencies. The timm and einops pins above are installation choices for this release, rather than versions reported in the paper; this is not a complete lockfile of the original experiment environment.
+
+Download and extract this repository, then open a terminal in its root directory (the directory containing this README and the `ultralytics` folder). Make the local source available to Python in the current shell:
+
+```bash
+export PYTHONPATH="$PWD${PYTHONPATH:+:$PYTHONPATH}"
+```
+
+Run the training, validation, and prediction Python examples below from this directory. This procedure uses the modified source in this repository directly.
+
+### Verify the environment
+
+```bash
+python -m pip check
+python - <<'PY'
+import sys
+import torch
+import torchvision
+import ultralytics
+
+print("Python:", sys.version.split()[0])
+print("PyTorch:", torch.__version__)
+print("torchvision:", torchvision.__version__)
+print("CUDA runtime:", torch.version.cuda)
+print("cuDNN:", torch.backends.cudnn.version())
+print("CUDA available:", torch.cuda.is_available())
+print("GPU:", torch.cuda.get_device_name(0) if torch.cuda.is_available() else "Unavailable")
+print("Ultralytics:", ultralytics.__version__)
+print("Source:", ultralytics.__file__)
+PY
+```
+
+For the paper's GPU environment, check Python 3.9.21, PyTorch 2.6.0 (possibly with a `+cu124` suffix), CUDA runtime 12.4, and cuDNN 9.1.x. `CUDA available` should be `True`. The Ultralytics version should be `8.3.9`, and its source path should point to this repository. A working NVIDIA driver compatible with the CUDA 12.4 runtime is required for GPU training.
+
 
 ## 🚀 Usage
 
