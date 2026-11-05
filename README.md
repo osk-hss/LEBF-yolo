@@ -10,7 +10,7 @@ LEBF-YOLO is a YOLO11-based model for small-object detection in UAV imagery, inc
 Install the dependencies in a **Python 3.9.21** environment:
 
 ```bash
-pip install torch==2.6.0 torchvision numpy matplotlib opencv-python pillow pyyaml requests scipy tqdm psutil py-cpuinfo pandas seaborn timm einops ultralytics-thop
+pip install -r requirements.txt
 ```
 
 This installs **PyTorch 2.6.0** and the dependencies required by this project.
