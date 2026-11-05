@@ -7,22 +7,13 @@ LEBF-YOLO is a YOLO11-based model for small-object detection in UAV imagery, inc
 
 ## 📦 Installation
 
-The paper uses Linux, Python 3.9.21, PyTorch 2.6.0, CUDA 12.4, cuDNN 9.1, and an NVIDIA RTX 3090 GPU (24 GB).
-
-Create the environment and install dependencies:
+Install the dependencies in a **Python 3.9.21** environment:
 
 ```bash
-conda create -n lebfyolo python=3.9.21 -y
-conda activate lebfyolo
-python -m pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
-python -m pip install "numpy>=1.23.0" "matplotlib>=3.3.0" \
-    "opencv-python>=4.6.0" "pillow>=7.1.2" "pyyaml>=5.3.1" \
-    "requests>=2.23.0" "scipy>=1.4.1" "tqdm>=4.64.0" \
-    psutil py-cpuinfo "pandas>=1.1.4" "seaborn>=0.11.0" \
-    timm==1.0.19 einops==0.8.1 "ultralytics-thop>=2.0.0"
+pip install torch==2.6.0 torchvision numpy matplotlib opencv-python pillow pyyaml requests scipy tqdm psutil py-cpuinfo pandas seaborn timm einops ultralytics-thop
 ```
 
-Download this repository and run the examples from its root directory to use the local modified Ultralytics 8.3.9 code. No `requirements.txt` is needed. The additional dependency versions above are installation settings, not a complete record of the paper's environment.
+This installs **PyTorch 2.6.0** and the dependencies required by this project.
 
 ## 🚀 Usage
 
